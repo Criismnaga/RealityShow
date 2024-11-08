@@ -67,16 +67,17 @@ Este projeto é uma aplicação web para gerenciar as inscrições dos participa
    docker-compose up --build
    ```
 
-4. **Acessando a API**
+4. **Verificando a conexão do bando com o FastAPI**
    Acesse a API FastAPI no navegador ou via cliente HTTP em [http://localhost:8000](http://localhost:8000).
+   Deve aparecer o nome do database: `{"database":["fccpd"]}`
 
-5. **Executando o Docker Compose para Iniciar o Banco de Dados**
+6. **Executando o Docker Compose para Iniciar o Banco de Dados**
    Iniciar o Docker Compose:
    ```bash
    docker-compose up --build  # Reconstrói e inicia os contêineres
    ```
 
-6. **Verificando o Banco de Dados**
+7. **Verificando o Banco de Dados**
    Execute o seguinte comando em um segundo terminal:
    ```bash
    docker exec -it fccpd-mod2-db-1 mysql -u root -p
@@ -89,7 +90,7 @@ Este projeto é uma aplicação web para gerenciar as inscrições dos participa
    ```
    Digite `exit` para sair.
 
-7. **Reinicializando o Docker Compose**
+8. **Reinicializando o Docker Compose**
    Caso faça alguma alteração no script, siga os passos abaixo:
    - Rode `docker-compose down -v` no segundo terminal
    - Pressione `Control+C` no primeiro terminal
