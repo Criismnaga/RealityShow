@@ -94,3 +94,33 @@ Este projeto é uma aplicação web para gerenciar as inscrições dos participa
    - Rode `docker-compose down -v` no segundo terminal
    - Pressione `Control+C` no primeiro terminal
    - Depois, repita os comandos de inicialização.
+  
+## Estrutura do Projeto
+  
+  - **api/**: Contém o código do FastAPI para a API.
+  - **frontend/**: Contém o código do Streamlit para a interface do usuário.
+  - **scripts/**: Scripts SQL de inicialização do banco de dados.
+  - **docker-compose.yml**: Configuração dos serviços Docker para o projeto
+
+## Acessando a Documentação do FastAPI
+  - Caso já tenha rodado a aplicação e criado os containers e volumes, os remova com `docker-compose down -v` no terminal e inicialize tudo de novo.
+
+O FastAPI gera automaticamente uma documentação interativa para a API.
+
+- **Swagger UI**: Acesse a documentação interativa em [http://localhost:8000/docs](http://localhost:8000/docs). Nesta página, você pode explorar todos os endpoints e testar as rotas diretamente clicando no botão Try It Out
+  
+## Acessando a Interface do Streamlit
+
+A interface do Streamlit para cadastro pode ser acessada em [http://localhost:8501](http://localhost:8501). Essa interface permite que novos usuários se cadastrem com as seguintes informações:
+
+- **Username**
+- **Password**
+- **Nome**
+- **Email**
+
+### Fluxo de Cadastro
+
+1. Acesse o Streamlit em [http://localhost:8501](http://localhost:8501).
+2. Preencha os campos de **username**, **password**, **nome**, e **email**.
+3. Clique em "Registrar" para enviar os dados para a API FastAPI.
+4. A API verificará se o `username` e o `email` já estão cadastrados e retornará uma mensagem de sucesso ou erro.
