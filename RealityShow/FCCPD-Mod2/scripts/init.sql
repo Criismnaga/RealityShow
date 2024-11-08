@@ -18,6 +18,14 @@ CREATE TABLE IF NOT EXISTS inscricoes (
     FOREIGN KEY (participante_id) REFERENCES participantes(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS logins (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    participante_id INT,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    senha VARCHAR(255) NOT NULL,  -- Use hash para senha em ambiente real
+    FOREIGN KEY (participante_id) REFERENCES participantes(id) ON DELETE CASCADE
+);
+
 INSERT INTO participantes (nome, email, grupo) VALUES
 ('João Silva', 'joao.silva@email.com', 'Pipoca'),
 ('Maria Oliveira', 'maria.oliveira@email.com', 'Camarote'),
@@ -27,3 +35,8 @@ INSERT INTO inscricoes (participante_id, formulario, status) VALUES
 (1, '{"idade": 25, "cidade": "São Paulo", "profissao": "Engenheiro"}', 'Aprovado'),
 (2, '{"idade": 30, "cidade": "Rio de Janeiro", "profissao": "Atriz"}', 'Pendente'),
 (3, '{"idade": 22, "cidade": "Belo Horizonte", "profissao": "Estudante"}', 'Rejeitado');
+
+INSERT INTO logins (participante_id, username, senha) VALUES
+(1, 'joao.silva', 'senhaJoao123'), 
+(2, 'maria.oliveira', 'senhaMaria123'),  
+(3, 'carlos.souza', 'senhaCarlos123');
