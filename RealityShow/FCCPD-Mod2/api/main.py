@@ -27,6 +27,17 @@ class RegisterData(BaseModel):
     nome: str
     email: str
 
+# Rota para validar conexão com o banco de dados
+@app.get('/')
+def root():
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    cursor.execute("SELECT DATABASE();")
+    db_name = cursor.fetchone()
+    cursor.close()
+    connection.close()
+    return {"database": db_name}
+
 # Endpoint para cadastro de usuário
 @app.post("/register")
 async def register(data: RegisterData):
