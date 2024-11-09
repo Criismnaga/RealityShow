@@ -26,6 +26,8 @@ CREATE TABLE IF NOT EXISTS logins (
     FOREIGN KEY (participante_id) REFERENCES participantes(id) ON DELETE CASCADE
 );
 
+
+
 INSERT INTO participantes (nome, email, grupo) VALUES
 ('João Silva', 'joao.silva@email.com', 'Pipoca'),
 ('Maria Oliveira', 'maria.oliveira@email.com', 'Camarote'),
