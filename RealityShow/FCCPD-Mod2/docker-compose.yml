@@ -25,16 +25,16 @@ services:
       - app-network
 
   # Serviço do React
-  react-app:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile-react
-    ports:
-      - "3000:3000" 
-    networks:
-      - app-network
-    depends_on:
-      - api 
+  # react-app:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile-react
+  #   ports:
+  #     - "3000:3000" 
+  #   networks:
+  #     - app-network
+  #   depends_on:
+  #     - api 
 
   api:
     build:
