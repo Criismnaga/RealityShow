@@ -18,11 +18,23 @@ services:
   streamlit:
     build:
       context: .
-      dockerfile: Dockerfile  # Ajuste o caminho se necessário
+      dockerfile: Dockerfile 
     ports:
-      - "8501:8501"  # Porta padrão do Streamlit
+      - "8501:8501"
     networks:
       - app-network
+
+  # Serviço do React
+  react-app:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile-react
+    ports:
+      - "3000:3000" 
+    networks:
+      - app-network
+    depends_on:
+      - api 
 
   api:
     build:
