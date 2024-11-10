@@ -1,8 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from typing import Any, Dict
 from api.db import get_db_connection
-import json
 
 
 router = APIRouter()
@@ -10,7 +8,12 @@ router = APIRouter()
 
 class InscricaoData(BaseModel):
     participante_id: int
-    formulario: Dict[str, Any]
+    idade: int
+    apellido: str
+    animal: str
+    habilidades: str
+    estacao: str
+    musica: str
 
 class UpdateInscricaoData(BaseModel):
     status: str
@@ -29,8 +32,8 @@ async def criar_inscricao(data: InscricaoData):
         raise HTTPException(status_code=404, detail="Participante não encontrado.")
 
     cursor.execute(
-        "INSERT INTO inscricoes (participante_id, formulario) VALUES (%s, %s)",
-        (data.participante_id, json.dumps(data.formulario))
+        "INSERT INTO inscricoes (participante_id, idade, apelido_colegio, animal_representa, habilidade, estacao_ano, musica_preferida) VALUES",
+        (data.participante_id, data.idade, data.apellido, data.animal, data.habilidades, data.estacao, data.musica)
     )
     connection.commit()
     inscricao_id = cursor.lastrowid
