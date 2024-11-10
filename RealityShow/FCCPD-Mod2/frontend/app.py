@@ -131,13 +131,48 @@ elif auth_mode == "Login":
 elif auth_mode == "Inscriptions":
     st.header("User Inscriptions")
     participante_id = st.number_input("Participant ID", min_value=1, step=1)
-    formulario = st.text_area("Form Data (in JSON format)")
+    
+    # Perguntas padrão
+    nome = st.text_input("Nome")
+    idade = st.number_input("Idade", min_value=0, step=1)
+    instagram = st.text_input("@ no Instagram")
+    seguidores = st.number_input("Quantidade de seguidores", min_value=0, step=1)
+    
+    # Perguntas diferentes
+    idade_coluna = st.number_input("Idade da sua coluna", min_value=0, step=1)
+    apelido_colegio = st.text_input("Apelido da época do colégio")
+    animal_rep = st.text_area("Qual animal mais te representa e por quê?")
+    habilidade = st.text_input("Uma habilidade secreta")
+    estacao_ano = st.text_area("Se você fosse uma estação do ano, qual seria e por quê?")
+    superpoder = st.text_input("Que superpoder você gostaria de ter?")
+    talento_danca = st.text_input("Uma palavra para descrever seu talento para dança")
+    musica_entrada = st.text_input("Qual música tocaria sempre que você entrasse numa sala?")
+    travessura = st.text_area("Qual foi a maior travessura que você já aprontou?")
+    bordao = st.text_input("Qual seria seu bordão num reality show?")
 
+    # Verifique se o botão foi pressionado
     if st.button("Submit Inscription"):
-        if participante_id and formulario:
+        if participante_id and nome:
+            # Crie o formulário em formato JSON
+            formulario = {
+                "nome": nome,
+                "idade": idade,
+                "instagram": instagram,
+                "seguidores": seguidores,
+                "idade_coluna": idade_coluna,
+                "apelido_colegio": apelido_colegio,
+                "animal_rep": animal_rep,
+                "habilidade": habilidade,
+                "estacao_ano": estacao_ano,
+                "superpoder": superpoder,
+                "talento_danca": talento_danca,
+                "musica_entrada": musica_entrada,
+                "travessura": travessura,
+                "bordao": bordao
+            }
             create_inscription(participante_id, formulario)
         else:
-            st.warning("Please fill in all fields")
+            st.warning("Please fill in all required fields")
 
 elif auth_mode == "Admin Panel":
     st.header("Admin Panel")
