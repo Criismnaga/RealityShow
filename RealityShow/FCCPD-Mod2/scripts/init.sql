@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS inscricoes (
     habilidade VARCHAR(255),
     estacao_ano TEXT,
     musica_preferida TEXT,
-    status ENUM('Pendente', 'Aprovado', 'Rejeitado') DEFAULT 'Pendente'
+    status ENUM('Pendente', 'Aprovado', 'Rejeitado') DEFAULT 'Pendente',
     FOREIGN KEY (participante_id) REFERENCES participantes(id) ON DELETE CASCADE
 );
 
@@ -35,10 +35,11 @@ CREATE TABLE IF NOT EXISTS logins (
 );
 
 
-INSERT INTO participantes (nome, email, grupo, instagram, seguidores) VALUES
+INSERT INTO participantes (nome, email, grupo, instagram, seguidores) VALUES
 ('João Silva', 'joao.silva@email.com', 'Pipoca', '@joao_silva', 1200),
 ('Maria Oliveira', 'maria.oliveira@email.com', 'Camarote', '@maria_oliveira', 4500),
 ('Carlos Souza', 'carlos.souza@email.com', 'Não Selecionado',  '@carlos_souza', 800);
+
 
 -- segunda tabela: INSERT INTO inscricoes (participante_id, formulario, status, idade_coluna, apelido_colegio, animal_rep, habilidade, estacao_ano, superpoder, talento_danca, musica_entrada, travessura, bordao) VALUES
 -- (1, '{"idade": 25, "cidade": "São Paulo", "profissao": "Engenheiro"}', 'Aprovado', 22, 'Jojo', 'Leão', 'Cantar', 'Verão', 'Voar', 'Excelente', 'We Will Rock You', 'Fazer um show no palco', 'Eu sou o rei!'),

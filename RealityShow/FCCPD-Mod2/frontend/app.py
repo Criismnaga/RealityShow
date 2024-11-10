@@ -39,10 +39,19 @@ def login_user(username, password):
     response = requests.post(url, json=payload)
     if response.status_code == 200:
         st.success("Login successful!")
-        return True
+        user_data = response.json()
+        return user_data
     else:
         st.error("Invalid credentials.")
-        return False
+        return None
+
+def create_inscription(participante_id, formulario):
+    url = f"{BASE_URL}/inscricao"
+    response = requests.post(url, json={"participante_id": participante_id, "formulario": formulario})
+    if response.status_code == 200:
+        st.success("Inscription created successfully!")
+    else:
+        st.error(f"Error: {response.json().get('detail', 'Unknown error')}")
 
 def get_all_inscriptions():
     url = f"{BASE_URL}/inscricoes"
@@ -53,70 +62,32 @@ def get_all_inscriptions():
         st.error("Failed to fetch inscriptions.")
         return []
 
-def get_approved_inscriptions():
-    url = f"{BASE_URL}/inscricoes/aprovados"
-    response = requests.get(url)
-    if response.status_code == 200:
-        return response.json()
-    else:
-        st.error("Failed to fetch approved inscriptions.")
-        return []
-
-def create_inscription(participante_id, formulario):
-    url = f"{BASE_URL}/inscricao"
-    payload = {
-        "participante_id": participante_id,
-        "formulario": formulario
-    }
-    response = requests.post(url, json=payload)
-    if response.status_code == 200:
-        st.success("Inscription created successfully!")
-    else:
-        st.error(f"Error: {response.json().get('detail', 'Unknown error')}")
-
-def update_inscription_status(inscricao_id, status):
-    url = f"{BASE_URL}/inscricao/{inscricao_id}"
-    payload = {
-        "status": status
-    }
-    response = requests.put(url, json=payload)
-    if response.status_code == 200:
-        st.success("Inscription status updated successfully!")
-    else:
-        st.error("Failed to update inscription status.")
-
-def delete_inscription(inscricao_id):
-    url = f"{BASE_URL}/inscricao/{inscricao_id}"
-    response = requests.delete(url)
-    if response.status_code == 200:
-        st.success("Inscription deleted successfully!")
-    else:
-        st.error("Failed to delete inscription.")
-
-def get_participant_by_username(username):
-    url = f"{BASE_URL}/participante/{username}"
-    response = requests.get(url)
-    if response.status_code == 200:
-        return response.json()
-    else:
-        st.error("Failed to fetch participant information.")
-        return None
-
-def get_all_logins():
-    url = f"{BASE_URL}/logins"
-    response = requests.get(url)
-    if response.status_code == 200:
-        return response.json()
-    else:
-        st.error("Failed to fetch logins.")
-        return []
+# Inicializa o estado da sessão para login e dados do participante
+if "logged_in" not in st.session_state:
+    st.session_state["logged_in"] = False
+if "auth_mode" not in st.session_state:
+    st.session_state["auth_mode"] = "Login"
+if "participant_id" not in st.session_state:
+    st.session_state["participant_id"] = None
+if "participant_name" not in st.session_state:
+    st.session_state["participant_name"] = None
 
 # Layout principal
 st.title("User Authentication and Inscription Management")
 
 # Seleciona o modo de autenticação
-auth_mode = st.sidebar.selectbox("Choose mode", ["Login", "Register", "Inscriptions", "Admin Panel"])
+available_modes = ["Login", "Register", "Admin Panel"]
+auth_mode = st.sidebar.selectbox(
+    "Choose mode", 
+    available_modes,
+    index=available_modes.index(st.session_state["auth_mode"]) if st.session_state["auth_mode"] in available_modes else 0
+)
 
+# Define o auth_mode manualmente para "Inscriptions" caso o usuário esteja logado
+if st.session_state["logged_in"]:
+    auth_mode = "Inscriptions"
+
+# Aba de Registro
 if auth_mode == "Register":
     st.markdown("<div class='form-container'>", unsafe_allow_html=True)
     st.header("Register New User")
@@ -132,6 +103,7 @@ if auth_mode == "Register":
             st.warning("Please fill in all fields")
     st.markdown("</div>", unsafe_allow_html=True)
 
+# Aba de Login
 elif auth_mode == "Login":
     st.markdown("<div class='form-container'>", unsafe_allow_html=True)
     st.header("User Login")
@@ -140,25 +112,42 @@ elif auth_mode == "Login":
 
     if st.button("Login"):
         if username and password:
-            login_success = login_user(username, password)
-            if login_success:
-                st.info("Now you can access user-specific features.")
+            user_data = login_user(username, password)
+            if user_data:
+                # Armazena as informações do participante no estado da sessão
+                st.session_state["logged_in"] = True
+                st.session_state["auth_mode"] = "Inscriptions"
+                st.session_state["participant_id"] = user_data["id"]
+                st.session_state["participant_name"] = user_data["nome"]
+                st.experimental_rerun()  # Redireciona automaticamente para "Inscriptions"
         else:
             st.warning("Please enter both username and password")
     st.markdown("</div>", unsafe_allow_html=True)
 
+# Aba de Inscrições
 elif auth_mode == "Inscriptions":
     st.markdown("<div class='form-container'>", unsafe_allow_html=True)
     st.header("User Inscriptions")
-    participante_id = st.number_input("Participant ID", min_value=1, step=1)
     
-    # Perguntas padrão
-    nome = st.text_input("Nome")
+    # Exibe o ID e o nome do participante logado
+    participante_id = st.session_state.get("participant_id", "ID não encontrado")
+    nome = st.session_state.get("participant_name", "Nome não encontrado")
+    
+    st.write(f"**Participant ID**: {participante_id}")
+    st.write(f"**Participant Name**: {nome}")
+    
+    # Botão de Logout
+    if st.button("Logout"):
+        st.session_state["logged_in"] = False
+        st.session_state["auth_mode"] = "Login"
+        st.session_state["participant_id"] = None
+        st.session_state["participant_name"] = None
+        st.experimental_rerun()  # Redireciona para a tela de Login
+    
+    # Campos do formulário de inscrição
     idade = st.number_input("Idade", min_value=0, step=1)
     instagram = st.text_input("@ no Instagram")
     seguidores = st.number_input("Quantidade de seguidores", min_value=0, step=1)
-    
-    # Perguntas diferentes
     idade_coluna = st.number_input("Idade da sua coluna", min_value=0, step=1)
     apelido_colegio = st.text_input("Apelido da época do colégio")
     animal_rep = st.text_area("Qual animal mais te representa e por quê?")
@@ -193,38 +182,16 @@ elif auth_mode == "Inscriptions":
             st.warning("Please fill in all required fields")
     st.markdown("</div>", unsafe_allow_html=True)
 
+# Aba de Painel Administrativo
 elif auth_mode == "Admin Panel":
     st.markdown("<div class='form-container'>", unsafe_allow_html=True)
     st.header("Admin Panel")
 
-    st.subheader("View All Inscriptions")
+    # Exibir todas as inscrições
     inscriptions = get_all_inscriptions()
-    st.write(inscriptions)
+    st.subheader("All Inscriptions")
+    for inscription in inscriptions:
+        st.write(inscription)
 
-    st.subheader("View Approved Inscriptions")
-    approved_inscriptions = get_approved_inscriptions()
-    st.write(approved_inscriptions)
-
-    st.subheader("Update Inscription Status")
-    inscricao_id = st.number_input("Inscription ID", min_value=1, step=1)
-    new_status = st.selectbox("Status", ["Aprovado", "Rejeitado"])
-    if st.button("Update Status"):
-        if inscricao_id:
-            update_inscription_status(inscricao_id, new_status)
-
-    st.subheader("Delete Inscription")
-    del_inscricao_id = st.number_input("Inscription ID to delete", min_value=1, step=1)
-    if st.button("Delete Inscription"):
-        if del_inscricao_id:
-            delete_inscription(del_inscricao_id)
-
-    st.subheader("View All Logins")
-    logins = get_all_logins()
-    st.write(logins)
-
-    st.subheader("Search Participant by Username")
-    search_username = st.text_input("Username to search")
-    if st.button("Search"):
-        participant = get_participant_by_username(search_username)
-        st.write(participant)
+    # Outras funcionalidades administrativas podem ser adicionadas aqui
     st.markdown("</div>", unsafe_allow_html=True)
