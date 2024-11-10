@@ -1,0 +1,101 @@
+ /* Fundo animado e colorido */
+.reportview-container {
+    background: linear-gradient(135deg, #FF6F61, #FFC107, #FF9800, #F44336);
+    color: #ffffff;
+}
+
+/* Estilo do título */
+h1 {
+    font-size: 2.5rem;
+    color: #ffffff;
+    text-align: center;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    text-shadow: 2px 2px #ff69b4;
+}
+
+/* Sidebar estilizada */
+div[data-testid="stSidebar"] {
+    background: linear-gradient(135deg, #4CAF50, #03A9F4);
+    padding: 20px;
+    color: #ffffff;
+}
+
+.css-17eq0hr {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    color: #fff;
+}
+
+/* Botões animados */
+.stButton>button {
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.stButton>button:hover {
+    background-color: #FF1493;
+    color: #FFF;
+}
+
+/* Linha divisória animada */
+.line {
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(to right, #FF6F61, #FFC107);
+    border-radius: 5px;
+    margin: 20px 0;
+    animation: move 2s infinite linear;
+}
+
+@keyframes move {
+    from {background-position: 0;}
+    to {background-position: 100%;}
+}
+
+/* Estilização das mensagens de feedback */
+.stAlert .st-bx {
+    font-size: 18px;
+    font-weight: bold;
+    color: #FF6347;
+    animation: pop 0.5s ease;
+}
+
+@keyframes pop {
+    0% {transform: scale(0.9);}
+    100% {transform: scale(1);}
+}
+
+/* Inputs personalizados */
+input, textarea {
+    border: 2px solid #FF6347;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+/* Títulos dos campos e dicas */
+.stTextInput>div>label {
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 18px;
+    color: #FFD700;
+}
+
+/* Checkbox animado */
+.stCheckbox>label {
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+/* Campo de Perguntas e Respostas para realidade show */
+textarea, .stTextArea>div>textarea {
+    border: 3px dashed #FF1493;
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #FF69B4;
+}

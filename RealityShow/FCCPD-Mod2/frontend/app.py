@@ -1,8 +1,16 @@
-import streamlit as st
-import requests
+import streamlit as st  # type: ignore
+import requests  # type: ignore
 
 BASE_URL = "http://api:8000"
 
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+# Carrega o CSS personalizado
+local_css("./frontend/styles.css")  # Ajuste o caminho conforme necessário
+
+# Funções da API
 def register_user(username, password, nome, email):
     url = f"{BASE_URL}/register"
     payload = {
@@ -98,11 +106,14 @@ def get_all_logins():
         st.error("Failed to fetch logins.")
         return []
 
+# Layout principal
 st.title("User Authentication and Inscription Management")
 
+# Seleciona o modo de autenticação
 auth_mode = st.sidebar.selectbox("Choose mode", ["Login", "Register", "Inscriptions", "Admin Panel"])
 
 if auth_mode == "Register":
+    st.markdown("<div class='form-container'>", unsafe_allow_html=True)
     st.header("Register New User")
     new_username = st.text_input("Username")
     new_password = st.text_input("Password", type="password")
@@ -114,8 +125,10 @@ if auth_mode == "Register":
             register_user(new_username, new_password, new_name, new_email)
         else:
             st.warning("Please fill in all fields")
+    st.markdown("</div>", unsafe_allow_html=True)
 
 elif auth_mode == "Login":
+    st.markdown("<div class='form-container'>", unsafe_allow_html=True)
     st.header("User Login")
     username = st.text_input("Username")
     password = st.text_input("Password", type="password")
@@ -127,8 +140,10 @@ elif auth_mode == "Login":
                 st.info("Now you can access user-specific features.")
         else:
             st.warning("Please enter both username and password")
+    st.markdown("</div>", unsafe_allow_html=True)
 
 elif auth_mode == "Inscriptions":
+    st.markdown("<div class='form-container'>", unsafe_allow_html=True)
     st.header("User Inscriptions")
     participante_id = st.number_input("Participant ID", min_value=1, step=1)
     
@@ -150,10 +165,8 @@ elif auth_mode == "Inscriptions":
     travessura = st.text_area("Qual foi a maior travessura que você já aprontou?")
     bordao = st.text_input("Qual seria seu bordão num reality show?")
 
-    # Verifique se o botão foi pressionado
     if st.button("Submit Inscription"):
         if participante_id and nome:
-            # Crie o formulário em formato JSON
             formulario = {
                 "nome": nome,
                 "idade": idade,
@@ -173,8 +186,10 @@ elif auth_mode == "Inscriptions":
             create_inscription(participante_id, formulario)
         else:
             st.warning("Please fill in all required fields")
+    st.markdown("</div>", unsafe_allow_html=True)
 
 elif auth_mode == "Admin Panel":
+    st.markdown("<div class='form-container'>", unsafe_allow_html=True)
     st.header("Admin Panel")
 
     st.subheader("View All Inscriptions")
@@ -207,3 +222,4 @@ elif auth_mode == "Admin Panel":
     if st.button("Search"):
         participant = get_participant_by_username(search_username)
         st.write(participant)
+    st.markdown("</div>", unsafe_allow_html=True)
