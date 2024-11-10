@@ -1,31 +1,37 @@
- /* Fundo animado e colorido */
-.reportview-container {
-    background: linear-gradient(135deg, #FF6F61, #FFC107, #FF9800, #F44336);
+/* Aplicando a fonte Poppins */
+body, .stApp, h1, input, textarea, .stButton>button, .stTextInput>div>label, .stCheckbox>label {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Fundo escuro com gradiente sutil */
+body, .stApp {
+    background: linear-gradient(135deg, #2F2F2F, #3B3B3B); /* cinza chumbo */
     color: #ffffff;
 }
 
 /* Estilo do título */
 h1 {
     font-size: 2.5rem;
-    color: #ffffff;
+    color: #ff69b4; /* Rosa */
     text-align: center;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    text-shadow: 2px 2px #ff69b4;
+    text-shadow: 2px 2px #8b008b; /* Sombra em um tom mais escuro de rosa */
+    font-weight: 600; /* Título em peso mais forte */
 }
 
 /* Sidebar estilizada */
 div[data-testid="stSidebar"] {
-    background: linear-gradient(135deg, #4CAF50, #03A9F4);
+    background: #2F2F2F; /* Cinza chumbo */
     padding: 20px;
     color: #ffffff;
 }
 
+/* Texto principal com a fonte Poppins */
 .css-17eq0hr {
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff;
 }
 
-/* Botões animados */
+/* Botões animados em rosa com efeito hover verde limão */
 .stButton>button {
     background-color: #ff69b4;
     color: white;
@@ -37,15 +43,15 @@ div[data-testid="stSidebar"] {
 }
 
 .stButton>button:hover {
-    background-color: #FF1493;
-    color: #FFF;
+    background-color: #32CD32; /* Verde limão */
+    color: #000; /* Preto para contraste */
 }
 
-/* Linha divisória animada */
+/* Linha divisória com efeito de gradiente rosa */
 .line {
     height: 4px;
     width: 100%;
-    background: linear-gradient(to right, #FF6F61, #FFC107);
+    background: linear-gradient(to right, #ff69b4, #8b008b);
     border-radius: 5px;
     margin: 20px 0;
     animation: move 2s infinite linear;
@@ -60,7 +66,7 @@ div[data-testid="stSidebar"] {
 .stAlert .st-bx {
     font-size: 18px;
     font-weight: bold;
-    color: #FF6347;
+    color: #32CD32; /* Verde limão */
     animation: pop 0.5s ease;
 }
 
@@ -69,33 +75,32 @@ div[data-testid="stSidebar"] {
     100% {transform: scale(1);}
 }
 
-/* Inputs personalizados */
+/* Inputs personalizados com borda rosa */
 input, textarea {
-    border: 2px solid #FF6347;
+    border: 2px solid #ff69b4; /* Rosa */
     padding: 10px;
     border-radius: 5px;
     font-size: 18px;
+    color: #ffffff;
+    background-color: #333333; /* Cinza bem escuro */
 }
 
-/* Títulos dos campos e dicas */
+/* Títulos dos campos e dicas com tom verde limão */
 .stTextInput>div>label {
-    font-family: 'Comic Sans MS', cursive;
     font-size: 18px;
-    color: #FFD700;
+    color: #32CD32; /* Verde limão */
 }
 
-/* Checkbox animado */
+/* Checkbox com cor de texto branca */
 .stCheckbox>label {
-    font-family: 'Comic Sans MS', cursive;
     font-size: 16px;
     color: #ffffff;
 }
 
-/* Campo de Perguntas e Respostas para realidade show */
+/* Campo de Perguntas e Respostas para reality show */
 textarea, .stTextArea>div>textarea {
-    border: 3px dashed #FF1493;
-    font-family: 'Comic Sans MS', cursive;
+    border: 3px dashed #ff69b4; /* Borda rosa */
     font-size: 16px;
     color: #ffffff;
-    background-color: #FF69B4;
+    background-color: #3B3B3B; /* Fundo em cinza escuro */
 }

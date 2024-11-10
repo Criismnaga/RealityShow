@@ -1,4 +1,3 @@
-
 services:
 
   db:
@@ -21,40 +20,31 @@ services:
       dockerfile: Dockerfile 
     ports:
       - "8501:8501"
+    volumes:
+      - ./frontend:/app/frontend
     networks:
       - app-network
 
-  # Serviço do React
-  # react-app:
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Dockerfile-react
-  #   ports:
-  #     - "3000:3000" 
-  #   networks:
-  #     - app-network
-  #   depends_on:
-  #     - api 
+    # Serviço do FastAPI
+    api:
+      build:
+        dockerfile: Dockerfile
+      environment:
+        DB_HOST: db
+        DB_PORT: 3306
+        DB_NAME: fccpd
+        DB_USER: root
+        DB_PASSWORD: admin123
+      command: uvicorn api.main:app --host 0.0.0.0 --port 8000
+      ports:
+        - "8000:8000"
+      depends_on:
+        - db
+      networks:
+        - app-network
+        
+  networks:
+    app-network:
 
-  api:
-    build:
-      dockerfile: Dockerfile
-    environment:
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_NAME: fccpd
-      DB_USER: root
-      DB_PASSWORD: admin123
-    command: uvicorn api.main:app --host 0.0.0.0 --port 8000
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-    networks:
-      - app-network
-      
-networks:
-  app-network:
-
-volumes:
-  db_data:
+  volumes:
+    db_data:
