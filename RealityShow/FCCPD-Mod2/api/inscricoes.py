@@ -111,20 +111,39 @@ async def get_inscricoes_aprovadas():
     connection.close()
     return inscricoes
 
-#* Deletar uma inscrição específica
 @router.delete("/inscricao/{inscricao_id}", tags=["user"])
 async def delete_inscricao(inscricao_id: int):
     connection = get_db_connection()
     cursor = connection.cursor(dictionary=True)
 
-    cursor.execute("SELECT * FROM inscricoes WHERE id = %s", (inscricao_id,))
-    if not cursor.fetchone():
+    try:
+        # Verifica se a inscrição existe
+        cursor.execute("SELECT * FROM inscricoes WHERE id = %s", (inscricao_id,))
+        inscricao = cursor.fetchone()
+        if not inscricao:
+            raise HTTPException(status_code=404, detail="Inscrição não encontrada.")
+        
+        # Obtém o participante_id associado à inscrição
+        participante_id = inscricao['participante_id']
+
+        # Deleta a inscrição da tabela `inscricoes`
+        cursor.execute("DELETE FROM inscricoes WHERE id = %s", (inscricao_id,))
+
+        # Deleta o login associado ao participante da tabela `logins`
+        cursor.execute("DELETE FROM logins WHERE participante_id = %s", (participante_id,))
+
+        # Deleta o participante da tabela `participantes`
+        cursor.execute("DELETE FROM participantes WHERE id = %s", (participante_id,))
+
+        # Confirma as deleções
+        connection.commit()
+
+        return {"success": True, "message": "Inscrição e dados associados deletados com sucesso"}
+
+    except Exception as e:
+        connection.rollback()  # Reverte em caso de erro
+        raise HTTPException(status_code=500, detail=f"Erro ao deletar inscrição: {str(e)}")
+
+    finally:
         cursor.close()
         connection.close()
-        raise HTTPException(status_code=404, detail="Inscrição não encontrada.")
-
-    cursor.execute("DELETE FROM inscricoes WHERE id = %s", (inscricao_id,))
-    connection.commit()
-    cursor.close()
-    connection.close()
-    return {"success": True, "message": "Inscrição deletada com sucesso"}

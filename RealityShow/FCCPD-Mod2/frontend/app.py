@@ -129,6 +129,18 @@ def put_reject_inscription(inscricao_id):
     else:
         st.error(f"Error: {response.json().get('detail', 'Unknown error')}")
 
+def delete_inscricao(inscricao_id):
+    url =  url = f"{BASE_URL}/inscricao/{inscricao_id}"  # Substitua pelo URL correto da API
+    response = requests.delete(url)
+    
+    if response.status_code == 200:
+        st.success("Inscrição deletada com sucesso!")
+        # Limpa o estado da sessão para deslogar o usuário
+        st.session_state.clear()
+        st.session_state["auth_mode"] = "Login"  # Define o modo de autenticação para "Login"
+        st.experimental_rerun()  # Redireciona para a página de login
+    else:
+        st.error(f"Erro ao deletar inscrição: {response.json().get('detail', 'Erro desconhecido')}")
 
 # Inicializa o estado da sessão para login e dados do participante
 if "logged_in" not in st.session_state:
@@ -215,6 +227,13 @@ elif  auth_mode == "Inscriptions":
         st.session_state.clear()
         st.session_state["auth_mode"] = "Login"
         st.experimental_rerun()
+    
+    # Botão para deletar inscrição
+    if st.button("Deletar Inscrição"):
+        if participante_id != "ID não encontrado":
+            delete_inscricao(participante_id)
+        else:
+            st.warning("Nenhuma inscrição encontrada para deletar.")
 
     # Busca as informações existentes do participante
     participant_info = get_participant_info(participante_id)
