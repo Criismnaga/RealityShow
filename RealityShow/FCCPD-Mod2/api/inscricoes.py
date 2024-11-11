@@ -66,7 +66,7 @@ async def update_inscricao(inscricao_id: int, data: UpdateInscricaoData):
 async def get_inscricoes():
     connection = get_db_connection()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM inscricoes")
+    cursor.execute("SELECT participantes.id AS participante_id, participantes.nome AS nome_participante, inscricoes.* FROM inscricoes JOIN participantes ON inscricoes.participante_id = participantes.id;")
     inscricoes = cursor.fetchall()
     cursor.close()
     connection.close()

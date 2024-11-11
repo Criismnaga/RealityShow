@@ -1,5 +1,6 @@
 import streamlit as st  # type: ignore
 import requests  # type: ignore
+import pandas as pd  # type: ignore
 
 BASE_URL = "http://api:8000"
 
@@ -61,6 +62,34 @@ def get_all_inscriptions():
     else:
         st.error("Failed to fetch inscriptions.")
         return []
+    
+
+def get_approved_inscriptions():
+    url = f"{BASE_URL}/inscricoes/aprovados"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        st.error("Failed to fetch approved inscriptions.")
+        return []
+    
+
+def put_approve_inscription(inscricao_id):
+    url = f"{BASE_URL}/inscricao/{inscricao_id}"
+    response = requests.put(url, json={"status": "Aprovado"})
+    if response.status_code == 200:
+        st.success("Inscription approved successfully!")
+    else:
+        st.error(f"Error: {response.json().get('detail', 'Unknown error')}")
+
+def put_reject_inscription(inscricao_id):
+    url = f"{BASE_URL}/inscricao/{inscricao_id}"
+    response = requests.put(url, json={"status": "Rejeitado"})
+    if response.status_code == 200:
+        st.success("Inscription rejected successfully!")
+    else:
+        st.error(f"Error: {response.json().get('detail', 'Unknown error')}")
+
 
 # Inicializa o estado da sessão para login e dados do participante
 if "logged_in" not in st.session_state:
@@ -190,8 +219,28 @@ elif auth_mode == "Admin Panel":
     # Exibir todas as inscrições
     inscriptions = get_all_inscriptions()
     st.subheader("All Inscriptions")
-    for inscription in inscriptions:
-        st.write(inscription)
+    inscription_df = pd.DataFrame(inscriptions)
+    st.dataframe(inscription_df, hide_index=True)
+
+
+    # Exibir apenas as inscrições aprovadas
+    approved_inscriptions = get_approved_inscriptions()
+    st.subheader("Approved Inscriptions")
+    approved_df = pd.DataFrame(approved_inscriptions)
+    st.dataframe(approved_df, hide_index=True)
+
+    # Aprovar inscrição
+    st.subheader("Approve or Reject Inscription")
+    st.write("Select an inscription ID and click the button to approve or reject it.")
+
+    inscricao_id = st.number_input("Inscription ID", min_value=0, step=1)
+
+    if st.button("Approve Inscription"):
+        put_approve_inscription(inscricao_id)
+        st.rerun()
+    if st.button("Reject Inscription"):
+        put_reject_inscription(inscricao_id)
+        st.rerun()
 
     # Outras funcionalidades administrativas podem ser adicionadas aqui
     st.markdown("</div>", unsafe_allow_html=True)

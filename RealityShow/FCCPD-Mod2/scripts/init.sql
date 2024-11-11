@@ -41,6 +41,7 @@ INSERT INTO participantes (nome, email, grupo, instagram, seguidores) VALUES
 ('Carlos Souza', 'carlos.souza@email.com', 'Não Selecionado',  '@carlos_souza', 800);
 
 
+
 -- segunda tabela: INSERT INTO inscricoes (participante_id, formulario, status, idade_coluna, apelido_colegio, animal_rep, habilidade, estacao_ano, superpoder, talento_danca, musica_entrada, travessura, bordao) VALUES
 -- (1, '{"idade": 25, "cidade": "São Paulo", "profissao": "Engenheiro"}', 'Aprovado', 22, 'Jojo', 'Leão', 'Cantar', 'Verão', 'Voar', 'Excelente', 'We Will Rock You', 'Fazer um show no palco', 'Eu sou o rei!'),
 -- (2, '{"idade": 30, "cidade": "Rio de Janeiro", "profissao": "Atriz"}', 'Pendente', 18, 'Mari', 'Gato', 'Dançar', 'Outono', 'Teleportar', 'Boa', 'Bad Romance', 'Ficar invisível para os professores', 'Cá estou!'),
