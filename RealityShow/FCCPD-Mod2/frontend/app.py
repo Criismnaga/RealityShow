@@ -47,21 +47,34 @@ def login_user(username, password):
         return None
 
 def create_inscription(participante_id, idade, apelido, animal, habilidades, estacao, musica):
-    url = f"{BASE_URL}/inscricao"
+    url = f"{BASE_URL}/inscricao"  # Substitua pelo URL correto do endpoint para criar inscrição
     payload = {
         "participante_id": participante_id,
         "idade": idade,
-        "apellido": apelido,
-        "animal": animal,
-        "habilidades": habilidades,
-        "estacao": estacao,
-        "musica": musica
+        "apelido_colegio": apelido,
+        "animal_representa": animal,
+        "habilidade": habilidades,
+        "estacao_ano": estacao,
+        "musica_preferida": musica
     }
-    response = requests.post(url, json=payload)
-    if response.status_code == 200:
-        st.success("Inscription created successfully!")
-    else:
-        st.error(f"Error: {response.json().get('detail', 'Unknown error')}")
+    try:
+        response = requests.post(url, json=payload)
+        
+        # Verifique se a resposta é JSON e se o status é bem-sucedido
+        if response.status_code == 200:
+            st.success("Inscription submitted successfully!")
+        else:
+            try:
+                # Tente obter detalhes do erro, se disponível em JSON
+                error_detail = response.json().get('detail', 'Unknown error')
+            except ValueError:
+                # Caso o JSON não seja válido, exiba o texto cru da resposta
+                error_detail = response.text or 'Unknown error'
+            
+            st.error(f"Error: {error_detail}")
+
+    except requests.exceptions.RequestException as e:
+        st.error(f"Connection error: {e}")
 
 def get_participant_id(username):
     response = requests.get(f"{BASE_URL}/participante/{username}")
