@@ -78,7 +78,7 @@ async def get_inscricoes():
 async def get_inscricoes_aprovadas():
     connection = get_db_connection()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM inscricoes WHERE status = 'Aprovado'")
+    cursor.execute("SELECT participantes.id AS participante_id, participantes.nome AS nome_participante, inscricoes.* FROM inscricoes JOIN participantes ON inscricoes.participante_id = participantes.id; WHERE inscricoes.status = 'Aprovado'")
     inscricoes = cursor.fetchall()
     cursor.close()
     connection.close()

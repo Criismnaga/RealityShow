@@ -229,7 +229,7 @@ elif auth_mode == "Admin Panel":
     approved_df = pd.DataFrame(approved_inscriptions)
     st.dataframe(approved_df, hide_index=True)
 
-    # Aprovar inscrição
+    # Aprovar ou rejeitar inscrição
     st.subheader("Approve or Reject Inscription")
     st.write("Select an inscription ID and click the button to approve or reject it.")
 
