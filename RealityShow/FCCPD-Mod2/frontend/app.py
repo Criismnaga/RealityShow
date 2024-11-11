@@ -153,7 +153,7 @@ if "participant_name" not in st.session_state:
     st.session_state["participant_name"] = None
 
 # Layout principal
-st.title("User Authentication and Inscription Management")
+st.title("Se inscreva para o Spinoff do BBB!")
 
 # Seleciona o modo de autenticação
 available_modes = ["Login", "Register", "Admin Panel"]
