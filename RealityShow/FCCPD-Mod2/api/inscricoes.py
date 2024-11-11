@@ -86,7 +86,7 @@ async def get_inscricoes():
     connection = get_db_connection()
     cursor = connection.cursor(dictionary=True)
     cursor.execute("""
-        SELECT participantes.id AS participante_id, participantes.nome AS nome_participante, inscricoes.* 
+        SELECT *
         FROM inscricoes 
         JOIN participantes ON inscricoes.participante_id = participantes.id
     """)
@@ -101,7 +101,7 @@ async def get_inscricoes_aprovadas():
     connection = get_db_connection()
     cursor = connection.cursor(dictionary=True)
     cursor.execute("""
-        SELECT participantes.id AS participante_id, participantes.nome AS nome_participante, inscricoes.* 
+        SELECT *
         FROM inscricoes 
         JOIN participantes ON inscricoes.participante_id = participantes.id
         WHERE inscricoes.status = 'Aprovado'

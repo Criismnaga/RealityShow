@@ -12,6 +12,8 @@ class RegisterData(BaseModel):
     password: str
     nome: str
     email: str
+    instagram: str
+    seguidores: int
 
 class LoginData(BaseModel):
     username: str
@@ -39,8 +41,8 @@ async def register(data: RegisterData):
     try:
         # Inserir dados na tabela participantes
         cursor.execute(
-            "INSERT INTO participantes (nome, email) VALUES (%s, %s)",
-            (data.nome, data.email)
+            "INSERT INTO participantes (nome, email, instagram, seguidores) VALUES (%s, %s)",
+            (data.nome, data.email, data.instagram, data.seguidores)
         )
         participante_id = cursor.lastrowid
 
