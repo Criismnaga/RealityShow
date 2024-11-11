@@ -1,39 +1,39 @@
-/* Aplicando a fonte Poppins */
+/* Aplicando a fonte Raleway */
 body, .stApp, h1, input, textarea, .stButton>button, .stTextInput>div>label, .stCheckbox>label {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Raleway', sans-serif; 
 }
 
-/* Fundo escuro com gradiente sutil */
+/* Fundo com gradiente mais suave */
 body, .stApp {
-    background: linear-gradient(135deg, #2F2F2F, #3B3B3B); /* cinza chumbo */
-    color: #ffffff;
+    background: linear-gradient(135deg, #FAA943, #EFC3CA); 
+    color: #B66878;
 }
 
 /* Estilo do título */
 h1 {
     font-size: 2.5rem;
-    color: #ff69b4; /* Rosa */
+    color: #B66878; 
     text-align: center;
-    text-shadow: 2px 2px #8b008b; /* Sombra em um tom mais escuro de rosa */
-    font-weight: 600; /* Título em peso mais forte */
+    text-shadow: 2px 2px #9A4E5B; 
+    font-weight: 600;
 }
 
 /* Sidebar estilizada */
 div[data-testid="stSidebar"] {
-    background: #2F2F2F; /* Cinza chumbo */
+    background: #FAA943; 
     padding: 20px;
-    color: #ffffff;
+    color: #B66878; 
 }
 
-/* Texto principal com a fonte Poppins */
+/* Texto principal com a fonte personalizada */
 .css-17eq0hr {
-    font-family: 'Poppins', sans-serif;
-    color: #ffffff;
+    font-family: 'Raleway', sans-serif;
+    color: #B66878; 
 }
 
-/* Botões animados em rosa com efeito hover verde limão */
+/* Botões animados com hover */
 .stButton>button {
-    background-color: #ff69b4;
+    background-color: #B66878;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -43,15 +43,15 @@ div[data-testid="stSidebar"] {
 }
 
 .stButton>button:hover {
-    background-color: #32CD32; /* Verde limão */
-    color: #000; /* Preto para contraste */
+    background-color: #FAA943;
+    color: #000;
 }
 
-/* Linha divisória com efeito de gradiente rosa */
+/* Linha divisória com efeito de gradiente suave */
 .line {
     height: 4px;
     width: 100%;
-    background: linear-gradient(to right, #ff69b4, #8b008b);
+    background: linear-gradient(to right, #B66878, #FAA943);
     border-radius: 5px;
     margin: 20px 0;
     animation: move 2s infinite linear;
@@ -66,7 +66,7 @@ div[data-testid="stSidebar"] {
 .stAlert .st-bx {
     font-size: 18px;
     font-weight: bold;
-    color: #32CD32; /* Verde limão */
+    color: #32CD32;
     animation: pop 0.5s ease;
 }
 
@@ -75,32 +75,32 @@ div[data-testid="stSidebar"] {
     100% {transform: scale(1);}
 }
 
-/* Inputs personalizados com borda rosa */
+/* Inputs personalizados */
 input, textarea {
-    border: 2px solid #ff69b4; /* Rosa */
+    border: 2px solid #B66878; 
     padding: 10px;
     border-radius: 5px;
     font-size: 18px;
-    color: #ffffff;
-    background-color: #333333; /* Cinza bem escuro */
+    color: #B66878; 
+    background-color: #FAA943; 
 }
 
-/* Títulos dos campos e dicas com tom verde limão */
+/* Títulos dos campos e dicas */
 .stTextInput>div>label {
     font-size: 18px;
-    color: #32CD32; /* Verde limão */
+    color: #D49BA7; 
 }
 
 /* Checkbox com cor de texto branca */
 .stCheckbox>label {
     font-size: 16px;
-    color: #ffffff;
+    color: #B66878;
 }
 
-/* Campo de Perguntas e Respostas para reality show */
+/* Campo de Perguntas e Respostas */
 textarea, .stTextArea>div>textarea {
-    border: 3px dashed #ff69b4; /* Borda rosa */
+    border: 3px dashed #B66878; 
     font-size: 16px;
-    color: #ffffff;
-    background-color: #3B3B3B; /* Fundo em cinza escuro */
+    color: #B66878; 
+    background-color: #EFC3CA; 
 }

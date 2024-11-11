@@ -11,9 +11,9 @@ def local_css(file_name):
 # Carrega o CSS personalizado
 local_css("./frontend/styles.css")
 
-# Carrega a fonte personalizada
+# Carrega a fonte personalizada Raleway:
 st.markdown("""
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
 """, unsafe_allow_html=True)
 
 # Funções da API
