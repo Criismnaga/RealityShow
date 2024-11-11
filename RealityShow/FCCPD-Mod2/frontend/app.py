@@ -17,13 +17,16 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Funções da API
-def register_user(username, password, nome, email):
+def register_user(username, password, nome, email, seguidores, instagram):
     url = f"{BASE_URL}/register"
     payload = {
         "username": username,
         "password": password,
         "nome": nome,
-        "email": email
+        "email": email,
+        "instagram": instagram,
+        "seguidores": seguidores
+        
     }
     response = requests.post(url, json=payload)
     if response.status_code == 200:
@@ -175,12 +178,14 @@ if auth_mode == "Register":
     new_password = st.text_input("Password", type="password")
     new_name = st.text_input("Full Name")
     new_email = st.text_input("Email")
+    new_instagram = st.text_input("Instagram")
+    new_seguidores = st.number_input("Seguidores",  min_value=0, step=1)
 
     if st.button("Register"):
-        if new_username and new_password and new_name and new_email:
-            register_user(new_username, new_password, new_name, new_email)
+        if all([new_username, new_password, new_name, new_email, new_instagram, isinstance(new_seguidores, int)]):
+            register_user(new_username, new_password, new_name, new_email, new_seguidores, new_instagram)
         else:
-            st.warning("Please fill in all fields")
+            st.error("Por favor, preencha todos os campos corretamente.")
     st.markdown("</div>", unsafe_allow_html=True)
 
 # Aba de Login

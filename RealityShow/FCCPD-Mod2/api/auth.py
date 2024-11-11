@@ -41,7 +41,7 @@ async def register(data: RegisterData):
     try:
         # Inserir dados na tabela participantes
         cursor.execute(
-            "INSERT INTO participantes (nome, email, instagram, seguidores) VALUES (%s, %s)",
+            "INSERT INTO participantes (nome, email, instagram, seguidores) VALUES (%s, %s,%s, %s)",
             (data.nome, data.email, data.instagram, data.seguidores)
         )
         participante_id = cursor.lastrowid
