@@ -41,6 +41,22 @@ async def criar_inscricao(data: InscricaoData):
     connection.close()
     return {"success": True, "message": "Inscrição criada com sucesso", "inscricao_id": inscricao_id}
 
+@router.get("/inscricao/{participante_id}", tags=["user"])
+async def get_participant_by_id_endpoint(participante_id: int):
+    connection = get_db_connection()
+    cursor = connection.cursor(dictionary=True)
+    try:
+        cursor.execute("SELECT * FROM inscricoes WHERE id = %s", (participante_id,))
+        participant = cursor.fetchone()
+
+        if not participant:
+            raise HTTPException(status_code=404, detail="Participante não encontrado.")
+
+        return participant
+
+    finally:
+        cursor.close()
+        connection.close()
 
 #* Atualizar o status da inscrição
 @router.put("/inscricao/{inscricao_id}", tags=["admin"])
