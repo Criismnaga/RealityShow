@@ -15,7 +15,6 @@ CREATE TABLE IF NOT EXISTS inscricoes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     participante_id INT,
     data_inscricao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    -- formulario JSON NOT NULL,
     idade INT,
     apelido_colegio VARCHAR(100),
     animal_representa TEXT,
@@ -38,22 +37,25 @@ CREATE TABLE IF NOT EXISTS logins (
 INSERT INTO participantes (nome, email, grupo, instagram, seguidores) VALUES
 ('João Silva', 'joao.silva@email.com', 'Pipoca', '@joao_silva', 1200),
 ('Maria Oliveira', 'maria.oliveira@email.com', 'Camarote', '@maria_oliveira', 4500),
-('Carlos Souza', 'carlos.souza@email.com', 'Não Selecionado',  '@carlos_souza', 800);
+('Carlos Souza', 'carlos.souza@email.com', 'Não Selecionado',  '@carlos_souza', 800),
+('Ana Santos', 'ana.santos@email.com', 'Pipoca', '@ana_santos', 1500),
+('Pedro Lima', 'pedro.lima@email.com', 'Camarote', '@pedro_lima', 3000),
+('Julia Pereira', 'julia.pereira@email.com', 'Não Selecionado', '@julia_pereira', 700);
 
-
-
--- segunda tabela: INSERT INTO inscricoes (participante_id, formulario, status, idade_coluna, apelido_colegio, animal_rep, habilidade, estacao_ano, superpoder, talento_danca, musica_entrada, travessura, bordao) VALUES
--- (1, '{"idade": 25, "cidade": "São Paulo", "profissao": "Engenheiro"}', 'Aprovado', 22, 'Jojo', 'Leão', 'Cantar', 'Verão', 'Voar', 'Excelente', 'We Will Rock You', 'Fazer um show no palco', 'Eu sou o rei!'),
--- (2, '{"idade": 30, "cidade": "Rio de Janeiro", "profissao": "Atriz"}', 'Pendente', 18, 'Mari', 'Gato', 'Dançar', 'Outono', 'Teleportar', 'Boa', 'Bad Romance', 'Ficar invisível para os professores', 'Cá estou!'),
--- (3, '{"idade": 22, "cidade": "Belo Horizonte", "profissao": "Estudante"}', 'Rejeitado', 19, 'Carlinhos', 'Cachorro', 'Cozinhar', 'Inverno', 'Invisibilidade', 'Regular', 'Stayin’ Alive', 'Trocar o quadro do professor', 'Vou dominar o mundo!');
 
 INSERT INTO inscricoes (participante_id, idade, apelido_colegio, animal_representa, habilidade, estacao_ano, musica_preferida, status) VALUES
 (1, 22, 'Jojo', 'Leão', 'Cantar', 'Verão', 'We Will Rock You', 'Aprovado'),
 (2, 18, 'Mari', 'Gato', 'Dançar', 'Outono', 'Bad Romance', 'Pendente'),
-(3, 19, 'Carlinhos', 'Cachorro', 'Cozinhar', 'Inverno', 'Stayin’ Alive', 'Rejeitado');
+(3, 19, 'Carlinhos', 'Cachorro', 'Cozinhar', 'Inverno', 'Stayin’ Alive', 'Rejeitado'),
+(4, 20, 'Aninha', 'Girafa', 'Pintar', 'Primavera', 'Thriller', 'Pendente'),
+(5, 21, 'Pedrinho', 'Tigre', 'Jogar futebol', 'Inverno', 'We Are The Champions', 'Aprovado'),
+(6, 23, 'Julinha', 'Elefante', 'Nadar', 'Verão', 'I Want To Break Free', 'Rejeitado');
 
 
 INSERT INTO logins (participante_id, username, senha) VALUES
 (1, 'joao.silva', 'senhaJoao123'), 
 (2, 'maria.oliveira', 'senhaMaria123'),  
-(3, 'carlos.souza', 'senhaCarlos123');
+(3, 'carlos.souza', 'senhaCarlos123'),
+(4, 'ana.santos', 'senhaAna123'),
+(5, 'pedro.lima', 'senhaPedro123'),
+(6, 'julia.pereira', 'senhaJulia123');
